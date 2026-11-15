@@ -209,30 +209,19 @@
       }
   }
 
-  // មុខងារបើកទំព័រដើមពេល Login ជោគជ័យ
+ // មុខងារបើកទំព័រដើមពេល Login ជោគជ័យ
   function openHomePage(userData) {
       showNotification(`ចូលប្រព័ន្ធជោគជ័យ! ស្វាគមន៍ ${userData.name}`, 'success');
       
-      // រក្សាទុកទិន្នន័យ Session ទុកប្រើប្រាស់បន្ត
+      // រក្សាទុកទិន្នន័យ Session ទុកប្រើប្រាស់បន្តនៅទំព័រ home.html
       sessionStorage.setItem('currentUser', JSON.stringify(userData));
 
       setTimeout(() => {
-          if (typeof google !== 'undefined' && google.script && google.script.run) {
-              google.script.run
-                  .withSuccessHandler(function(htmlContent) {
-                      document.open();
-                      document.write(htmlContent);
-                      document.close();
-                  })
-                  .withFailureHandler(function(error) {
-                      showNotification('មានបញ្ហាក្នុងការបើកទំព័រដើម: ' + error.message, 'danger');
-                  })
-                  .loadHome();
-          } else {
-              console.log("Logged in user data:", userData);
-          }
+          // ប្តូរទំព័រទៅកាន់ home.html ផ្ទាល់សម្រាប់ GitHub Pages
+          window.location.href = 'home.html';
       }, 1000);
   }
+    
 
   // ស្គ្រីបផ្ទៀងផ្ទាត់ការ Login ជាមួយ Firebase Realtime Database
   window.handleLogin = async function(e) {
