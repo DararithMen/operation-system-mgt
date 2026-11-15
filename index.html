@@ -209,7 +209,7 @@
       }
   }
 
- // មុខងារបើកទំព័រដើមពេល Login ជោគជ័យ
+ // មុខងារបើកទំព័រដើមពេល Login ជោគជ័យ (សម្រាប់ GitHub Pages)
   function openHomePage(userData) {
       showNotification(`ចូលប្រព័ន្ធជោគជ័យ! ស្វាគមន៍ ${userData.name}`, 'success');
       
@@ -217,11 +217,10 @@
       sessionStorage.setItem('currentUser', JSON.stringify(userData));
 
       setTimeout(() => {
-          // ប្តូរទំព័រទៅកាន់ home.html ផ្ទាល់សម្រាប់ GitHub Pages
+          // ប្តូរទំព័រទៅកាន់ home.html ផ្ទាល់នៅលើ GitHub Pages
           window.location.href = 'home.html';
       }, 1000);
   }
-    
 
   // ស្គ្រីបផ្ទៀងផ្ទាត់ការ Login ជាមួយ Firebase Realtime Database
   window.handleLogin = async function(e) {
