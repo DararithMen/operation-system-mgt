@@ -209,119 +209,137 @@
       }
   }
 
- // មុខងារបើកទំព័រដើមពេល Login ជោគជ័យ (សម្រាប់ GitHub Pages)
-  function openHomePage(userData) {
-      showNotification(`ចូលប្រព័ន្ធជោគជ័យ! ស្វាគមន៍ ${userData.name}`, 'success');
-      
-      // រក្សាទុកទិន្នន័យ Session ទុកប្រើប្រាស់បន្តនៅទំព័រ home.html
-      sessionStorage.setItem('currentUser', JSON.stringify(userData));
+// Show Dashboard Home View
+        function showHomeView(userData) {
+            document.getElementById('authContainer').classList.add('hidden');
+            document.getElementById('homeContainer').classList.remove('hidden');
 
-      setTimeout(() => {
-          // ប្តូរទំព័រទៅកាន់ home.html ផ្ទាល់នៅលើ GitHub Pages
-          window.location.href = 'home.html';
-      }, 1000);
-  }
+            document.getElementById('userNameDisplay').textContent = userData.name;
+            document.getElementById('userDeptDisplay').textContent = `ផ្នែក: ${userData.department}`;
+            document.getElementById('welcomeHeading').textContent = `ស្វាគមន៍, ${userData.name}!`;
+            document.getElementById('cardEmpId').textContent = userData.emp_id;
+            document.getElementById('cardDept').textContent = userData.department;
 
-  // ស្គ្រីបផ្ទៀងផ្ទាត់ការ Login ជាមួយ Firebase Realtime Database
-  window.handleLogin = async function(e) {
-      e.preventDefault();
-      const empIdInput = document.getElementById('loginEmpId').value.trim();
-      const passwordInput = document.getElementById('loginPassword').value.trim();
-      
-      try {
-          const dbRef = ref(getDatabase());
-          const snapshot = await get(child(dbRef, 'employees'));
-          
-          if (snapshot.exists()) {
-              const employees = snapshot.val();
-              let foundUser = null;
+            if (userData.timestamp) {
+                document.getElementById('cardTimestamp').textContent = new Date(userData.timestamp).toLocaleString('km-KH');
+            } else {
+                document.getElementById('cardTimestamp').textContent = 'អត់មានកំណត់ត្រា';
+            }
+        }
 
-              // ឆែករកមើលអត្តលេខបុគ្គលិក (Employee ID)
-              for (let key in employees) {
-                  if (employees[key].emp_id && employees[key].emp_id.toLowerCase() === empIdInput.toLowerCase()) {
-                      foundUser = employees[key];
-                      break;
-                  }
-              }
+        // Check Existing Session on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedUser = localStorage.getItem('github_currentUser');
+            if (savedUser) {
+                showHomeView(JSON.parse(savedUser));
+            }
+        });
 
-              if (foundUser) {
-                  if (foundUser.password === passwordInput) {
-                      openHomePage(foundUser);
-                  } else {
-                      showNotification('ពាក្យសម្ងាត់មិនត្រឹមត្រូវ!', 'danger');
-                  }
-              } else {
-                  showNotification('រកមិនឃើញអត្តលេខបុគ្គលិកនេះទេ!', 'danger');
-              }
-          } else {
-              showNotification('មិនមានទិន្នន័យបុគ្គលិកនៅក្នុងប្រព័ន្ធ Database ទេ។', 'danger');
-          }
-      } catch (error) {
-          console.error(error);
-          showNotification('មានបញ្ហាក្នុងការតភ្ជាប់ទៅកាន់ Firebase: ' + error.message, 'danger');
-      }
-  }
+        // Logout function
+        window.handleLogout = function() {
+            localStorage.removeItem('github_currentUser');
+            document.getElementById('homeContainer').classList.add('hidden');
+            document.getElementById('authContainer').classList.remove('hidden');
+        }
 
-  // ស្គ្រីបចុះឈ្មោះបុគ្គលិកថ្មី និងបញ្ជូនចូល Firebase Realtime Database
-  window.handleSignup = async function(e) {
-      e.preventDefault();
-      const name = document.getElementById('signupName').value.trim();
-      const empId = document.getElementById('signupEmpId').value.trim();
-      const dept = document.getElementById('signupDept').value;
-      const pass = document.getElementById('signupPassword').value;
-      const confirmPass = document.getElementById('signupConfirmPassword').value;
+        // Login Handler
+        window.handleLogin = async function(e) {
+            e.preventDefault();
+            const empIdInput = document.getElementById('loginEmpId').value.trim();
+            const passwordInput = document.getElementById('loginPassword').value.trim();
+            
+            try {
+                const dbRef = ref(getDatabase());
+                const snapshot = await get(child(dbRef, 'employees'));
+                
+                if (snapshot.exists()) {
+                    const employees = snapshot.val();
+                    let foundUser = null;
 
-      if (pass !== confirmPass) {
-          showNotification('ពាក្យសម្ងាត់ទាំងពីរមិនត្រូវគ្នាទេ!', 'danger');
-          return;
-      }
+                    for (let key in employees) {
+                        if (employees[key].emp_id && employees[key].emp_id.toLowerCase() === empIdInput.toLowerCase()) {
+                            foundUser = employees[key];
+                            break;
+                        }
+                    }
 
-      try {
-          const dbRef = ref(getDatabase());
-          const snapshot = await get(child(dbRef, 'employees'));
-          
-          let exists = false;
-          let count = 0;
+                    if (foundUser) {
+                        if (foundUser.password === passwordInput) {
+                            localStorage.setItem('github_currentUser', JSON.stringify(foundUser));
+                            showNotification('ចូលប្រព័ន្ធជោគជ័យ!', 'success');
+                            setTimeout(() => showHomeView(foundUser), 800);
+                        } else {
+                            showNotification('ពាក្យសម្ងាត់មិនត្រឹមត្រូវ!', 'danger');
+                        }
+                    } else {
+                        showNotification('រកមិនឃើញអត្តលេខបុគ្គលិកនេះទេ!', 'danger');
+                    }
+                } else {
+                    showNotification('មិនមានទិន្នន័យបុគ្គលិកក្នុង Database ទេ។', 'danger');
+                }
+            } catch (error) {
+                console.error(error);
+                showNotification('មានបញ្ហាក្នុងការតភ្ជាប់ Firebase: ' + error.message, 'danger');
+            }
+        }
 
-          if (snapshot.exists()) {
-              const employees = snapshot.val();
-              count = Object.keys(employees).length;
-              for (let key in employees) {
-                  if (employees[key].emp_id && employees[key].emp_id.toLowerCase() === empId.toLowerCase()) {
-                      exists = true;
-                      break;
-                  }
-              }
-          }
+        // Signup Handler
+        window.handleSignup = async function(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value.trim();
+            const empId = document.getElementById('signupEmpId').value.trim();
+            const dept = document.getElementById('signupDept').value;
+            const pass = document.getElementById('signupPassword').value;
+            const confirmPass = document.getElementById('signupConfirmPassword').value;
 
-          if (exists) {
-              showNotification('អត្តលេខបុគ្គលិកនេះមានរួចហើយ!', 'danger');
-              return;
-          }
+            if (pass !== confirmPass) {
+                showNotification('ពាក្យសម្ងាត់ទាំងពីរមិនត្រូវគ្នាទេ!', 'danger');
+                return;
+            }
 
-          // បង្កើត Key ស្វ័យប្រវត្តិ (ឧ. emp_01, emp_02, ...)
-          const newKey = 'emp_' + String(count + 1).padStart(2, '0');
+            try {
+                const dbRef = ref(getDatabase());
+                const snapshot = await get(child(dbRef, 'employees'));
+                
+                let exists = false;
+                let count = 0;
 
-          // រក្សាទុកទិន្នន័យចូល Firebase Realtime Database
-          await set(ref(db, 'employees/' + newKey), {
-              emp_id: empId,
-              password: pass,
-              name: name,
-              department: dept,
-              timestamp: new Date().toISOString()
-          });
+                if (snapshot.exists()) {
+                    const employees = snapshot.val();
+                    count = Object.keys(employees).length;
+                    for (let key in employees) {
+                        if (employees[key].emp_id && employees[key].emp_id.toLowerCase() === empId.toLowerCase()) {
+                            exists = true;
+                            break;
+                        }
+                    }
+                }
 
-          showNotification('បង្កើតគណនីបុគ្គលិកបានជោគជ័យ!', 'success');
-          setTimeout(() => {
-              e.target.reset();
-              switchTab('login');
-          }, 1200);
+                if (exists) {
+                    showNotification('អត្តលេខបុគ្គលិកនេះមានរួចហើយ!', 'danger');
+                    return;
+                }
 
-      } catch (error) {
-          console.error(error);
-          showNotification('មានបញ្ហាក្នុងការចុះឈ្មោះ: ' + error.message, 'danger');
-      }
-  }
-    </script>
+                const newKey = 'emp_' + String(count + 1).padStart(2, '0');
+
+                await set(ref(db, 'employees/' + newKey), {
+                    emp_id: empId,
+                    password: pass,
+                    name: name,
+                    department: dept,
+                    timestamp: new Date().toISOString()
+                });
+
+                showNotification('បង្កើតគណនីបុគ្គលិកបានជោគជ័យ!', 'success');
+                setTimeout(() => {
+                    e.target.reset();
+                    switchTab('login');
+                }, 1200);
+
+            } catch (error) {
+                console.error(error);
+                showNotification('មានបញ្ហាក្នុងការចុះឈ្មោះ: ' + error.message, 'danger');
+            }
+        }    </script>
 </body>
 </html>
