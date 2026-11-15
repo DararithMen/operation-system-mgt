@@ -203,37 +203,17 @@
           signupBtn.className = "flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-200 bg-white text-slate-800 shadow-sm";
           loginBtn.className = "flex-1 py-2 text-sm font-semibold text-slate-500 hover:text-slate-700 rounded-lg transition-all duration-200";
           signupForm.classList.remove('hidden');
-          loginForm.classList.add('hidden');
-          formTitle.textContent = "បង្កើតគណនីថ្មី";
-          formSubtitle.textContent = "សូមបំពេញព័ត៌មានខាងក្រោមដើម្បីចុះឈ្មោះ";
+          loginForm.cfunction openHomePage(userData) {
+          showNotification(`ចូលប្រព័ន្ធជោគជ័យ! ស្វាគមន៍ ${userData.name}`, 'success');
+          
+          // រក្សាទុកទិន្នន័យ Session ទុកប្រើប្រាស់បន្តនៅទំព័រ home.html
+          sessionStorage.setItem('currentUser', JSON.stringify(userData));
+
+          setTimeout(() => {
+              // ប្តូរទៅកាន់ទំព័រ home.html
+              window.location.href = 'home.html';
+          }, 1000);
       }
-  }
-
-// Show Dashboard Home View
-        function showHomeView(userData) {
-            document.getElementById('authContainer').classList.add('hidden');
-            document.getElementById('homeContainer').classList.remove('hidden');
-
-            document.getElementById('userNameDisplay').textContent = userData.name;
-            document.getElementById('userDeptDisplay').textContent = `ផ្នែក: ${userData.department}`;
-            document.getElementById('welcomeHeading').textContent = `ស្វាគមន៍, ${userData.name}!`;
-            document.getElementById('cardEmpId').textContent = userData.emp_id;
-            document.getElementById('cardDept').textContent = userData.department;
-
-            if (userData.timestamp) {
-                document.getElementById('cardTimestamp').textContent = new Date(userData.timestamp).toLocaleString('km-KH');
-            } else {
-                document.getElementById('cardTimestamp').textContent = 'អត់មានកំណត់ត្រា';
-            }
-        }
-
-        // Check Existing Session on Load
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedUser = localStorage.getItem('github_currentUser');
-            if (savedUser) {
-                showHomeView(JSON.parse(savedUser));
-            }
-        });
     
 
       
