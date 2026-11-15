@@ -234,13 +234,21 @@
                 showHomeView(JSON.parse(savedUser));
             }
         });
+    
 
-        // Logout function
-        window.handleLogout = function() {
-            localStorage.removeItem('github_currentUser');
-            document.getElementById('homeContainer').classList.add('hidden');
-            document.getElementById('authContainer').classList.remove('hidden');
-        }
+      
+        // មុខងារបើកទំព័រ home.html ពេល Login ជោគជ័យ (សម្រាប់ GitHub Pages)
+      function openHomePage(userData) {
+          showNotification(`ចូលប្រព័ន្ធជោគជ័យ! ស្វាគមន៍ ${userData.name}`, 'success');
+          
+          // រក្សាទុកទិន្នន័យ Session ទុកប្រើប្រាស់បន្តនៅទំព័រ home.html
+          sessionStorage.setItem('currentUser', JSON.stringify(userData));
+
+          setTimeout(() => {
+              // ប្តូរទៅកាន់ទំព័រ home.html
+              window.location.href = 'home.html';
+          }, 1000);
+      }
 
         // Login Handler
         window.handleLogin = async function(e) {
@@ -340,7 +348,13 @@
                 console.error(error);
                 showNotification('មានបញ្ហាក្នុងការចុះឈ្មោះ: ' + error.message, 'danger');
             }
-        }   
+        }
+      // Logout function
+        window.handleLogout = function() {
+            localStorage.removeItem('github_currentUser');
+            document.getElementById('homeContainer').classList.add('hidden');
+            document.getElementById('authContainer').classList.remove('hidden');
+        }
 </script>
 </body>
 </html>
