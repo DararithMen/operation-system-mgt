@@ -326,6 +326,7 @@ body.dark-theme {
   }
 }
 
+
 /* For large devices */
 @media screen and (min-width: 1150px) {
   .header {
@@ -381,4 +382,64 @@ body.dark-theme {
   .left-pd {
     padding-left: 114px;
   }
+}
+/*=============== SIDEBAR DROPDOWN ===============*/
+.sidebar__dropdown-toggle {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   cursor: pointer;
+}
+
+.sidebar__dropdown-arrow {
+   transition: transform 0.4s ease;
+   font-size: 1rem !important;
+}
+
+.sidebar__dropdown-container {
+   max-height: 0;
+   overflow: hidden;
+   transition: max-height 0.4s ease-in-out;
+   padding-left: 2rem;
+}
+
+/* Open dropdown state */
+.sidebar__dropdown.show-dropdown .sidebar__dropdown-container {
+   max-height: 500px; /* កម្ពស់គ្រប់គ្រាន់សម្រាប់បង្ហាញ Sub-menu */
+}
+
+.sidebar__dropdown.show-dropdown .sidebar__dropdown-arrow {
+   transform: rotate(180deg);
+}
+
+.sidebar__sub-group {
+   margin-top: 1rem;
+}
+
+.sidebar__sub-title {
+   font-size: var(--tiny-font-size);
+   font-weight: var(--font-semi-bold);
+   color: var(--title-color);
+   display: block;
+   margin-bottom: 0.5rem;
+}
+
+.sidebar__sub-link {
+   font-size: var(--smaller-font-size);
+   color: var(--text-color);
+   display: block;
+   padding: 0.3rem 0;
+   transition: color 0.4s;
+}
+
+.sidebar__sub-link:hover {
+   color: var(--first-color);
+}
+
+.sidebar__sub-link.disabled {
+   color: hsl(228, 8%, 70%);
+   cursor: default;
+}
+.sidebar__sub-link.disabled:hover {
+   color: hsl(228, 8%, 70%);
 }
