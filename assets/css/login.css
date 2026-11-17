@@ -93,3 +93,12 @@
             font-weight: bold;
         }
         /* -------------------------------------------------------- */
+       .container {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: none; /* ព័ទ្ធបាំងរហូតដល់ប្រព័ន្ធ Login ជោគជ័យ */
+        }
