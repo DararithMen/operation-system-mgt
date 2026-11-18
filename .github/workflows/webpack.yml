@@ -5,6 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch: # បន្ថែម៖ អាចចុច Run ដោយដៃផ្ទាល់នៅលើ GitHub បាន
 
 jobs:
   build:
@@ -12,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
+        node-version: [20.x, 22.x] # កែសម្រួល៖ ដក 18.x ចេញព្រោះហួសសុពលភាព (EOL) ហើយប្រើតែជំនាន់ថ្មីៗ
 
     steps:
     - uses: actions/checkout@v4
@@ -21,8 +22,10 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
+        cache: 'npm' # បន្ថែម៖ រក្សាទុក Cache ដើម្បីឱ្យដំឡើង Package លើកក្រោយលឿនជាងមុន
+
+    - name: Install dependencies
+      run: npm ci # កែសម្រួល៖ ប្រើ npm ci ជំនួស npm install ដើម្បីឱ្យលឿន និងច្បាស់លាស់ជាង
 
     - name: Build
-      run: |
-        npm install
-        npx webpack
+      run: npx webpack --mode production # បន្ថែម៖ កំណត់ mode production ដើម្បីកុំឱ្យលោត Warning ពេល Build
