@@ -1,48 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
- // មុខងារត្រួតពិនិត្យការចូលប្រព័ន្ធ (Login)
-    function handleLogin(event) {
-        event.preventDefault();
-        const inputId = document.getElementById('empIdInput').value.trim().toUpperCase();
-        const errorEl = document.getElementById('loginError');
-
-        if (allowedEmployeeIDs.includes(inputId)) {
-            // អនុញ្ញាតឱ្យចូលប្រើប្រាស់
-            errorEl.style.display = 'none';
-            sessionStorage.setItem('current_user_id', inputId);
-            showMainForm(inputId);
-        } else {
-            // បដិសេធ ប្រសិនបើគ្មានអត្តលេខក្នុងបញ្ជី
-            errorEl.style.display = 'block';
-        }
-    }
-
-    function showMainForm(empId) {
-        document.getElementById('loginOverlay').style.display = 'none';
-        document.getElementById('appToolbar').style.display = 'flex';
-        document.getElementById('appContainer').style.display = 'block';
-        document.getElementById('userBadge').innerText = '👤 គណនី៖ ' + empId;
-    }
-
-    function logout() {
-        if(confirm("តើអ្នកពិតជាចង់ចាកចេញមែនទេ?")) {
-            sessionStorage.removeItem('current_user_id');
-            location.reload();
-        }
-    }
-
-    // ត្រួតពិនិត្យពេលបើកទំព័រ
-    function checkAuthOnLoad() {
-        const savedUser = sessionStorage.getItem('current_user_id');
-        if (savedUser && allowedEmployeeIDs.includes(savedUser)) {
-            showMainForm(savedUser);
-        } else {
-            document.getElementById('loginOverlay').style.display = 'flex';
-            document.getElementById('appToolbar').style.display = 'none';
-            document.getElementById('appContainer').style.display = 'none';
-        }
-    }
 // ការកំណត់ការតភ្ជាប់ Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCh0zr1ZsuUYtYnoto2ml-fLm7SWyRUCpM",
@@ -105,15 +63,14 @@ window.switchTab = function(mode) {
     }
 }
 
-// មុខងារបើកទំព័រ home.html ពេល Login ជោគជ័យ (សម្រាប់ GitHub Pages)
+// មុខងារបើកទំព័រ home.html ពេល Login ជោគជ័យ
 function openHomePage(userData) {
     showNotification(`ចូលប្រព័ន្ធជោគជ័យ! ស្វាគមន៍ ${userData.name}`, 'success');
     
-    // រក្សាទុកទិន្នន័យ Session ទុកប្រើប្រាស់បន្តនៅទំព័រ home.html
+    // រក្សាទុកទិន្នន័យ Session
     sessionStorage.setItem('currentUser', JSON.stringify(userData));
 
     setTimeout(() => {
-        // ប្តូរទៅកាន់ទំព័រ home.html
         window.location.href = 'home.html';
     }, 1000);
 }
