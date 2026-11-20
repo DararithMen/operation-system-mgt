@@ -172,3 +172,41 @@ window.handleSignup = async function(e) {
         showNotification('មានបញ្ហាក្នុងការចុះឈ្មោះ: ' + error.message, 'danger');
     }
 }
+function showWorkspace(userData) {
+    const overlay = document.getElementById('loginOverlay');
+    const workspace = document.getElementById('workspaceContent');
+
+    if (userData?.name) {
+        const subEl = document.getElementById('sidebarUserSub');
+        if (subEl) {
+            subEl.textContent = `${userData.name} • ${userData.department || 'W.H Operation'}`;
+        }
+    }
+
+    if (workspace) {
+        workspace.classList.remove('hidden');
+    }
+
+    if (overlay) {
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+        }, 300);
+    }
+}
+
+function showLoginOverlay() {
+    const overlay = document.getElementById('loginOverlay');
+    const workspace = document.getElementById('workspaceContent');
+
+    if (workspace) {
+        workspace.classList.add('hidden');
+    }
+
+    if (overlay) {
+        overlay.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+    }
+}
+
+// ហៅ showWorkspace(foundUser) នៅពេល Login ត្រឹមត្រូវ
+// និងរក្សាទុក sessionStorage.setItem('currentUser', JSON.stringify(foundUser))
