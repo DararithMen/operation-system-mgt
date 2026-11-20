@@ -58,11 +58,4 @@ themeButton.addEventListener('click', () => {
     localStorage.setItem('selected-icon', getCurrentIcon())
 })
 /*=============== SIDEBAR DROPDOWN ===============*/
-const reportsDropdown = document.getElementById('reports-dropdown');
-if (reportsDropdown) {
-   reportsDropdown.addEventListener('click', (e) => {
-      e.preventDefault();
-      const parentDropdown = reportsDropdown.parentElement;
-      parentDropdown.classList.toggle('show-dropdown');
-   });
-}
+
