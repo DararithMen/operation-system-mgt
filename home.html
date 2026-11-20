@@ -11,6 +11,65 @@
       <link rel="stylesheet" href="assets/css/styles.css">
 
       <title>ប្រព័ន្ធគ្រប់គ្រងការងារផ្សេងៗ</title>
+      <style>
+         /* រចនាប័ទ្មបន្ថែមសម្រាប់ Dropdown List ក្នុង Sidebar */
+      .sidebar__dropdown-btn {
+         width: 100%;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         background: transparent;
+         border: none;
+         cursor: pointer;
+         text-align: left;
+         font-family: inherit;
+      }
+
+      .sidebar__dropdown-left {
+         display: flex;
+         align-items: center;
+         column-gap: 0.75rem;
+      }
+
+      .sidebar__dropdown-arrow {
+         font-size: 1.15rem;
+         transition: transform 0.25s ease;
+      }
+
+      .dropdown-open .sidebar__dropdown-arrow {
+         transform: rotate(180deg);
+      }
+
+      .sidebar__sublist {
+         display: none;
+         flex-direction: column;
+         row-gap: 0.25rem;
+         padding-left: 2.35rem;
+         padding-top: 0.25rem;
+         padding-bottom: 0.5rem;
+      }
+
+      .dropdown-open .sidebar__sublist {
+         display: flex;
+      }
+
+      .sidebar__sublink {
+         display: flex;
+         align-items: center;
+         column-gap: 0.5rem;
+         padding: 0.45rem 0.65rem;
+         border-radius: 0.5rem;
+         font-size: 0.875rem;
+         color: var(--text-color, #64748b);
+         text-decoration: none;
+         transition: background-color 0.2s ease, color 0.2s ease;
+      }
+
+      .sidebar__sublink:hover {
+         background-color: rgba(100, 116, 139, 0.12);
+         color: var(--title-color, #0f172a);
+      }
+      </style>
    </head>
    <body>
       <!--=============== HEADER ===============-->
@@ -51,12 +110,30 @@
                         <span>Dashboard</span>
                      </a>
                  
-                     <a href="ReportForn.html" class="sidebar__link">
-                        <i class="ri-wallet-3-fill"></i>
-                        <span>Reports Form</span>
-                    
-                         
-                     </a>
+                      <!-- Dropdown List ទី១: Reports -->
+                  <div class="sidebar__dropdown" id="reportsDropdown">
+                     <button type="button" class="sidebar__link sidebar__dropdown-btn" onclick="toggleSidebarDropdown('reportsDropdown')">
+                        <span class="sidebar__dropdown-left">
+                           <i class="ri-wallet-3-fill"></i>
+                           <span>Reports</span>
+                        </span>
+                        <i class="ri-arrow-down-s-line sidebar__dropdown-arrow"></i>
+                     </button>
+                     <div class="sidebar__sublist">
+                        <a href="ReportForn.html" class="sidebar__sublink">
+                           <i class="ri-file-text-line"></i>
+                           <span>Reports Form</span>
+                        </a>
+                        <a href="daily-report.html" class="sidebar__sublink">
+                           <i class="ri-file-list-2-line"></i>
+                           <span>Daily Report</span>
+                        </a>
+                        <a href="truck-report.html" class="sidebar__sublink">
+                           <i class="ri-truck-line"></i>
+                           <span>Truck Offloading</span>
+                        </a>
+                     </div>
+                  </div>
 
                      <a href="#" class="sidebar__link">
                         <i class="ri-calendar-fill"></i>
@@ -116,6 +193,21 @@
       <main class="main container" id="main">
          <h1>Home Page</h1>
       </main>      
+       <script>
+      function toggleSidebarDropdown(dropdownId) {
+         const dropdown = document.getElementById(dropdownId);
+         if (dropdown) {
+            dropdown.classList.toggle('dropdown-open');
+         }
+      }
+
+      function handleLogout() {
+         if (confirm('តើអ្នកពិតជាចង់ចាកចេញពីប្រព័ន្ធមែនទេ?')) {
+            sessionStorage.removeItem('currentUser');
+            window.location.href = 'home.html';
+         }
+      }
+   </script>
       <!--=============== MAIN JS ===============-->
       <script src="assets/js/main.js"></script>
    </body>
