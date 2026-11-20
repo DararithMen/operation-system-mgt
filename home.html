@@ -121,10 +121,10 @@
                         <i class="ri-arrow-down-s-line sidebar__dropdown-arrow"></i>
                      </button>
                      <div class="sidebar__sublist">
-                        <a href="ReportForn.html" class="sidebar__sublink">
+                       <a href="javascript:void(0)" onclick="loadPageInFrame('ReportForn.html', this)" class="sidebar__sublink">
                            <i class="ri-file-text-line"></i>
-                           <span>Reports Form</span>
-                        </a>
+                              <span>Reports Form</span>
+                                 </a>
                         <a href="daily-report.html" class="sidebar__sublink">
                            <i class="ri-file-list-2-line"></i>
                            <span>Daily Report</span>
@@ -212,9 +212,13 @@
    </nav>
 
    <!--=============== MAIN ===============-->
-   <main class="main container" id="main">
-      <h1>Home Page</h1>
-   </main>
+  <main class="main container" id="main" style="padding-top: 4.5rem; height: 100vh;">
+   <iframe id="contentFrame"
+           src="ReportForn.html"
+           title="Workspace Content"
+           style="width: 100%; height: calc(100vh - 5.5rem); border: none; border-radius: 0.75rem; background: #fff;">
+   </iframe>
+</main>
 
    <!--=============== DROPDOWN & AUTH SCRIPT ===============-->
    <script>
@@ -231,6 +235,27 @@
             window.location.href = 'index.html';
          }
       }
+      function loadPageInFrame(pageUrl, clickedEl) {
+   const frame = document.getElementById('contentFrame');
+   if (frame && pageUrl) {
+      frame.src = pageUrl;
+   }
+
+   // ដក active-link ចាស់ ហើយដាក់ទៅលើម៉ឺនុយដែលបានចុច
+   document.querySelectorAll('.sidebar__link, .sidebar__sublink').forEach((link) => {
+      link.classList.remove('active-link');
+   });
+
+   if (clickedEl) {
+      clickedEl.classList.add('active-link');
+   }
+
+   // បិទ Sidebar ដោយស្វ័យប្រវត្តិលើអេក្រង់តូច (Mobile) បន្ទាប់ពីជ្រើសរើសទំព័រ
+   const sidebar = document.getElementById('sidebar');
+   if (sidebar && window.innerWidth < 1024) {
+      sidebar.classList.remove('show-sidebar');
+   }
+}
    </script>
 
    <!--=============== MAIN JS ===============-->
