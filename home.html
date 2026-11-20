@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-   <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <!--=============== REMIXICONS ===============-->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
+   <!--=============== REMIXICONS ===============-->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
 
-      <!--=============== CSS ===============-->
-      <link rel="stylesheet" href="assets/css/styles.css">
+   <!--=============== CSS ===============-->
+   <link rel="stylesheet" href="assets/css/styles.css">
 
-      <title>ប្រព័ន្ធគ្រប់គ្រងការងារផ្សេងៗ</title>
-      <style>
-         /* រចនាប័ទ្មបន្ថែមសម្រាប់ Dropdown List ក្នុង Sidebar */
+   <title>ប្រព័ន្ធគ្រប់គ្រងការងារផ្សេងៗ</title>
+
+   <style>
+      /* រចនាប័ទ្មបន្ថែមសម្រាប់ Dropdown List ក្នុង Sidebar */
       .sidebar__dropdown-btn {
          width: 100%;
          display: flex;
@@ -69,48 +70,48 @@
          background-color: rgba(100, 116, 139, 0.12);
          color: var(--title-color, #0f172a);
       }
-      </style>
-   </head>
-   <body>
-      <!--=============== HEADER ===============-->
-      <header class="header" id="header">
-         <div class="header__container">
-            <a href="#" class="header__logo">
-               <i class="ri-cloud-fill"></i>
-               <span>Cloud</span>
-            </a>
-            
-            <button class="header__toggle" id="header-toggle">
-               <i class="ri-menu-line"></i>
-            </button>
-         </div>
-      </header>
+   </style>
+</head>
+<body>
+   <!--=============== HEADER ===============-->
+   <header class="header" id="header">
+      <div class="header__container">
+         <a href="home.html" class="header__logo">
+            <i class="ri-cloud-fill"></i>
+            <span>Cloud</span>
+         </a>
+         
+         <button class="header__toggle" id="header-toggle">
+            <i class="ri-menu-line"></i>
+         </button>
+      </div>
+   </header>
 
-      <!--=============== SIDEBAR ===============-->
-      <nav class="sidebar" id="sidebar">
-         <div class="sidebar__container">
-            <div class="sidebar__user">
-               <div class="sidebar__img">
-                  <img src="assets/img/perfil.png" alt="image">
-               </div>
-   
-               <div class="sidebar__info">
-                  <h3>Whearhouse Operation</h3>
-                  <span>Designed By Men Dararith(W.H Operaition)</span>
-               </div>
+   <!--=============== SIDEBAR ===============-->
+   <nav class="sidebar" id="sidebar">
+      <div class="sidebar__container">
+         <div class="sidebar__user">
+            <div class="sidebar__img">
+               <img src="assets/img/perfil.png" alt="image">
             </div>
 
-           <div class="sidebar__content">
-               <div>
-                  <h3 class="sidebar__title">MANAGE</h3>
+            <div class="sidebar__info">
+               <h3>Whearhouse Operation</h3>
+               <span>Designed By Men Dararith(W.H Operaition)</span>
+            </div>
+         </div>
 
-                  <div class="sidebar__list">
-                     <a href="#" class="sidebar__link active-link">
-                        <i class="ri-pie-chart-2-fill"></i>
-                        <span>Dashboard</span>
-                     </a>
-                 
-                      <!-- Dropdown List ទី១: Reports -->
+         <div class="sidebar__content">
+            <div>
+               <h3 class="sidebar__title">MANAGE</h3>
+
+               <div class="sidebar__list">
+                  <a href="home.html" class="sidebar__link active-link">
+                     <i class="ri-pie-chart-2-fill"></i>
+                     <span>Dashboard</span>
+                  </a>
+
+                  <!-- Dropdown List ទី១: Reports -->
                   <div class="sidebar__dropdown" id="reportsDropdown">
                      <button type="button" class="sidebar__link sidebar__dropdown-btn" onclick="toggleSidebarDropdown('reportsDropdown')">
                         <span class="sidebar__dropdown-left">
@@ -135,65 +136,88 @@
                      </div>
                   </div>
 
-                     <a href="#" class="sidebar__link">
-                        <i class="ri-calendar-fill"></i>
-                        <span>Calendar</span>
-                     </a>
-
-                     <a href="#" class="sidebar__link">
-                        <i class="ri-arrow-up-down-line"></i>
-                        <span>Database</span>
-                     </a>
-
-                     <a href="#" class="sidebar__link">
-                        <i class="ri-bar-chart-box-fill"></i>
-                        <span>Statistics</span>
-                     </a>
+                  <!-- Dropdown List ទី២: Warehouse & Inventory -->
+                  <div class="sidebar__dropdown" id="warehouseDropdown">
+                     <button type="button" class="sidebar__link sidebar__dropdown-btn" onclick="toggleSidebarDropdown('warehouseDropdown')">
+                        <span class="sidebar__dropdown-left">
+                           <i class="ri-archive-drawer-fill"></i>
+                           <span>Warehouse</span>
+                        </span>
+                        <i class="ri-arrow-down-s-line sidebar__dropdown-arrow"></i>
+                     </button>
+                     <div class="sidebar__sublist">
+                        <a href="inventory.html" class="sidebar__sublink">
+                           <i class="ri-stack-line"></i>
+                           <span>Inventory Stock</span>
+                        </a>
+                        <a href="materials.html" class="sidebar__sublink">
+                           <i class="ri-flask-line"></i>
+                           <span>Raw Materials</span>
+                        </a>
+                     </div>
                   </div>
-               </div>
 
-               <div>
-                  <h3 class="sidebar__title">SETTINGS</h3>
+                  <a href="calendar.html" class="sidebar__link">
+                     <i class="ri-calendar-fill"></i>
+                     <span>Calendar</span>
+                  </a>
 
-                  <div class="sidebar__list">
-                     <a href="#" class="sidebar__link">
-                        <i class="ri-settings-3-fill"></i>
-                        <span>Settings</span>
-                     </a>
+                  <a href="database.html" class="sidebar__link">
+                     <i class="ri-arrow-up-down-line"></i>
+                     <span>Database</span>
+                  </a>
 
-                     <a href="#" class="sidebar__link">
-                        <i class="ri-mail-unread-fill"></i>
-                        <span>Learning</span>
-                     </a>
-
-                     <a href="#" class="sidebar__link">
-                        <i class="ri-notification-2-fill"></i>
-                        <span>Notifications</span>
-                     </a>
-                  </div>
+                  <a href="statistics.html" class="sidebar__link">
+                     <i class="ri-bar-chart-box-fill"></i>
+                     <span>Statistics</span>
+                  </a>
                </div>
             </div>
 
-            <div class="sidebar__actions">
-               <button>
-                  <i class="ri-moon-clear-fill sidebar__link sidebar__theme" id="theme-button">
-                     <span>Theme</span>
-                  </i>
-               </button>
+            <div>
+               <h3 class="sidebar__title">SETTINGS</h3>
 
-               <button class="sidebar__link">
-                  <i class="ri-logout-box-r-fill"></i>
-                  <span>Log Out</span>
-               </button>
+               <div class="sidebar__list">
+                  <a href="settings.html" class="sidebar__link">
+                     <i class="ri-settings-3-fill"></i>
+                     <span>Settings</span>
+                  </a>
+
+                  <a href="learning.html" class="sidebar__link">
+                     <i class="ri-mail-unread-fill"></i>
+                     <span>Learning</span>
+                  </a>
+
+                  <a href="notifications.html" class="sidebar__link">
+                     <i class="ri-notification-2-fill"></i>
+                     <span>Notifications</span>
+                  </a>
+               </div>
             </div>
          </div>
-      </nav>
 
-      <!--=============== MAIN ===============-->
-      <main class="main container" id="main">
-         <h1>Home Page</h1>
-      </main>      
-       <script>
+         <div class="sidebar__actions">
+            <button type="button">
+               <i class="ri-moon-clear-fill sidebar__link sidebar__theme" id="theme-button">
+                  <span>Theme</span>
+               </i>
+            </button>
+
+            <button type="button" class="sidebar__link" onclick="handleLogout()">
+               <i class="ri-logout-box-r-fill"></i>
+               <span>Log Out</span>
+            </button>
+         </div>
+      </div>
+   </nav>
+
+   <!--=============== MAIN ===============-->
+   <main class="main container" id="main">
+      <h1>Home Page</h1>
+   </main>
+
+   <!--=============== DROPDOWN & AUTH SCRIPT ===============-->
+   <script>
       function toggleSidebarDropdown(dropdownId) {
          const dropdown = document.getElementById(dropdownId);
          if (dropdown) {
@@ -204,11 +228,12 @@
       function handleLogout() {
          if (confirm('តើអ្នកពិតជាចង់ចាកចេញពីប្រព័ន្ធមែនទេ?')) {
             sessionStorage.removeItem('currentUser');
-            window.location.href = 'home.html';
+            window.location.href = 'index.html';
          }
       }
    </script>
-      <!--=============== MAIN JS ===============-->
-      <script src="assets/js/main.js"></script>
-   </body>
+
+   <!--=============== MAIN JS ===============-->
+   <script src="assets/js/main.js"></script>
+</body>
 </html>
