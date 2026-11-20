@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ប្រព័ន្ធចូលប្រើប្រាស់បុគ្គលិក - Login & Sign Up</title>
-    
+    <title>ប្រព័ន្ធគ្រប់គ្រងការងារផ្សេងៗ</title>
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
- 
-    
-    <!-- Custom CSS -->
+    <!--=============== REMIXICONS ===============-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
+
+    <!--=============== CSS ===============-->
     <link rel="stylesheet" href="assets/css/styles.css">
-    
+
     <!-- Google Fonts for Khmer (Kantumruy Pro) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <script>
         tailwind.config = {
             theme: {
@@ -25,7 +26,7 @@
                     fontFamily: {
                         khmer: ['Kantumruy Pro', 'sans-serif'],
                     }
-               }
+                }
             }
         }
     </script>
@@ -39,9 +40,9 @@
 <body class="min-h-screen">
 
     <!-- ================= LOGIN OVERLAY (Modal) ================= -->
-    <div id="loginOverlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm transition-all duration-300">
+    <div id="loginOverlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm transition-opacity duration-300">
         <div id="authContainer" class="w-full max-w-md bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 overflow-hidden transition-all duration-300">
-            
+
             <!-- Header Section with Icon -->
             <div class="p-8 pb-4 text-center">
                 <div class="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-slate-700 shadow-sm border border-slate-200/60">
@@ -49,16 +50,16 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                     </svg>
                 </div>
-                
+
                 <h1 class="text-2xl font-bold text-slate-800 tracking-tight mb-1" id="formTitle">ស្វាគមន៍មកកាន់ប្រព័ន្ធ</h1>
                 <p class="text-slate-500 text-sm" id="formSubtitle">សូមបញ្ចូលអត្តលេខបុគ្គលិកដើម្បីចូលប្រើប្រាស់</p>
 
                 <!-- Navigation Tabs -->
                 <div class="flex bg-slate-100 p-1 rounded-xl mt-6 border border-slate-200/50">
-                    <button id="tabLoginBtn" onclick="switchTab('login')" class="flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-200 bg-white text-slate-800 shadow-sm">
+                    <button type="button" id="tabLoginBtn" onclick="switchTab('login')" class="flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-200 bg-white text-slate-800 shadow-sm">
                         ចូលប្រព័ន្ធ
                     </button>
-                    <button id="tabSignupBtn" onclick="switchTab('signup')" class="flex-1 py-2 text-sm font-semibold text-slate-500 hover:text-slate-700 rounded-lg transition-all duration-200">
+                    <button type="button" id="tabSignupBtn" onclick="switchTab('signup')" class="flex-1 py-2 text-sm font-semibold text-slate-500 hover:text-slate-700 rounded-lg transition-all duration-200">
                         ចុះឈ្មោះ
                     </button>
                 </div>
@@ -69,12 +70,12 @@
 
             <!-- Form Content Container -->
             <div class="px-8 pb-8 pt-2">
-                
+
                 <!-- ================= LOGIN FORM ================= -->
                 <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1">អត្តលេខបុគ្គលិក (Employee ID)</label>
-                        <input type="text" id="loginEmpId" required placeholder="ឧ. EMP-1024" 
+                        <input type="text" id="loginEmpId" required placeholder="ឧ. EMP-1024"
                             class="w-full px-4 py-3 bg-slate-50/50 border border-slate-300 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-800 focus:bg-white transition-all text-sm">
                     </div>
 
@@ -83,11 +84,11 @@
                             <label class="block text-xs font-semibold text-slate-700">ពាក្យសម្ងាត់ (Password)</label>
                             <a href="#" onclick="showNotification('សូមទាក់ទងផ្នែកធនធានមនុស្ស (HR) ដើម្បីផ្លាស់ប្តូរពាក្យសម្ងាត់', 'info')" class="text-xs text-slate-500 hover:text-slate-800 underline">ភ្លេចពាក្យសម្ងាត់?</a>
                         </div>
-                        <input type="password" id="loginPassword" required placeholder="••••••••" 
+                        <input type="password" id="loginPassword" required placeholder="••••••••"
                             class="w-full px-4 py-3 bg-slate-50/50 border border-slate-300 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-800 focus:bg-white transition-all text-sm">
                     </div>
 
-                    <button type="submit" 
+                    <button type="submit"
                         class="w-full py-3 px-4 bg-slate-900 hover:bg-slate-800 active:scale-[0.99] text-white font-medium rounded-xl shadow-md transition-all duration-200 text-sm mt-2">
                         ចូលប្រព័ន្ធ
                     </button>
@@ -97,13 +98,13 @@
                 <form id="signupForm" onsubmit="handleSignup(event)" class="space-y-3 hidden">
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1">ឈ្មោះពេញ (Full Name)</label>
-                        <input type="text" id="signupName" required placeholder="ឧ. សុខ ជា" 
+                        <input type="text" id="signupName" required placeholder="ឧ. សុខ ជា"
                             class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-300 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-800 focus:bg-white transition-all text-sm">
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1">អត្តលេខបុគ្គលិក (Employee ID)</label>
-                        <input type="text" id="signupEmpId" required placeholder="ឧ. EMP-1024" 
+                        <input type="text" id="signupEmpId" required placeholder="ឧ. EMP-1024"
                             class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-300 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-800 focus:bg-white transition-all text-sm">
                     </div>
 
@@ -121,17 +122,17 @@
 
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1">ពាក្យសម្ងាត់ (Password)</label>
-                        <input type="password" id="signupPassword" required placeholder="••••••••" 
+                        <input type="password" id="signupPassword" required placeholder="••••••••"
                             class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-300 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-800 focus:bg-white transition-all text-sm">
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1">ផ្ទៀងផ្ទាត់ពាក្យសម្ងាត់ (Confirm Password)</label>
-                        <input type="password" id="signupConfirmPassword" required placeholder="••••••••" 
+                        <input type="password" id="signupConfirmPassword" required placeholder="••••••••"
                             class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-300 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-800 focus:bg-white transition-all text-sm">
                     </div>
 
-                    <button type="submit" 
+                    <button type="submit"
                         class="w-full py-3 px-4 bg-slate-900 hover:bg-slate-800 active:scale-[0.99] text-white font-medium rounded-xl shadow-md transition-all duration-200 text-sm mt-3">
                         បង្កើតគណនីបុគ្គលិក
                     </button>
@@ -148,9 +149,115 @@
             </div>
         </div>
     </div>
+
+
+    <!-- ================= WORKSPACE (HIDDEN UNTIL LOGIN) ================= -->
+    <div id="workspaceContent" class="hidden">
+        <!--=============== HEADER ===============-->
+        <header class="header" id="header">
+            <div class="header__container">
+                <a href="#" class="header__logo">
+                    <i class="ri-cloud-fill"></i>
+                    <span>Cloud</span>
+                </a>
+                
+                <button class="header__toggle" id="header-toggle">
+                    <i class="ri-menu-line"></i>
+                </button>
+            </div>
+        </header>
+
+        <!--=============== SIDEBAR ===============-->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar__container">
+                <div class="sidebar__user">
+                    <div class="sidebar__img">
+                        <img src="assets/img/perfil.png" alt="image">
+                    </div>
     
-    
+                    <div class="sidebar__info">
+                        <h3 id="sidebarUserTitle">Whearhouse Operation</h3>
+                        <span id="sidebarUserSub">Designed By Men Dararith(W.H Operaition)</span>
+                    </div>
+                </div>
+
+                <div class="sidebar__content">
+                    <div>
+                        <h3 class="sidebar__title">MANAGE</h3>
+
+                        <div class="sidebar__list">
+                            <a href="#" class="sidebar__link active-link">
+                                <i class="ri-pie-chart-2-fill"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        
+                            <a href="#" class="sidebar__link">
+                                <i class="ri-wallet-3-fill"></i>
+                                <span>My Wallet</span>
+                            </a>
+
+                            <a href="#" class="sidebar__link">
+                                <i class="ri-calendar-fill"></i>
+                                <span>Calendar</span>
+                            </a>
+
+                            <a href="#" class="sidebar__link">
+                                <i class="ri-arrow-up-down-line"></i>
+                                <span>Recent Transactions</span>
+                            </a>
+
+                            <a href="#" class="sidebar__link">
+                                <i class="ri-bar-chart-box-fill"></i>
+                                <span>Statistics</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="sidebar__title">SETTINGS</h3>
+
+                        <div class="sidebar__list">
+                            <a href="#" class="sidebar__link">
+                                <i class="ri-settings-3-fill"></i>
+                                <span>Settings</span>
+                            </a>
+
+                            <a href="#" class="sidebar__link">
+                                <i class="ri-mail-unread-fill"></i>
+                                <span>My Messages</span>
+                            </a>
+
+                            <a href="#" class="sidebar__link">
+                                <i class="ri-notification-2-fill"></i>
+                                <span>Notifications</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar__actions">
+                    <button type="button">
+                        <i class="ri-moon-clear-fill sidebar__link sidebar__theme" id="theme-button">
+                            <span>Theme</span>
+                        </i>
+                    </button>
+
+                    <button type="button" onclick="handleLogout()" class="sidebar__link">
+                        <i class="ri-logout-box-r-fill"></i>
+                        <span>Log Out</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!--=============== MAIN ===============-->
+        <main class="main container" id="main">
+            <h1>Sidebar Menu</h1>
+        </main>
+    </div>
+
     <!--=============== JAVASCRIPT SCRIPTS ===============-->
     <script type="module" src="assets/js/auth.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
