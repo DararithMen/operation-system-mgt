@@ -44,6 +44,14 @@ import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/fireb
         }
     }
 // ការកំណត់ការតភ្ជាប់ Firebase
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCh0zr1ZsuUYtYnoto2ml-fLm7SWyRUCpM",
   authDomain: "documents-y7-2.firebaseapp.com",
@@ -51,12 +59,13 @@ const firebaseConfig = {
   projectId: "documents-y7-2",
   storageBucket: "documents-y7-2.appspot.com",
   messagingSenderId: "7486379749",
-  appId: "1:7486379749:web:77e78317f89df90ce4260c",
-  measurementId: "G-WWLX6Y48QC"
+  appId: "1:7486379749:web:24b85c0e526d00a1e4260c",
+  measurementId: "G-GWBMNK558M"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const analytics = getAnalytics(app);
 
 // បង្ហាញការជូនដំណឹង
 window.showNotification = function(message, type = 'danger') {
