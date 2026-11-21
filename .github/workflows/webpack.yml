@@ -5,7 +5,18 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  workflow_dispatch: # បន្ថែម៖ អាចចុច Run ដោយដៃផ្ទាល់នៅលើ GitHub បាន
+  workflow_dispatch: # អាចចុច Run ដោយដៃផ្ទាល់នៅលើ GitHub បាន
+
+# កំណត់សិទ្ធិចាំបាច់សម្រាប់ Deploy ទៅ GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# ការពារកុំឱ្យ Deploy ជាន់គ្នាក្នុងពេលតែមួយ
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -13,19 +24,50 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.x, 22.x] # កែសម្រួល៖ ដក 18.x ចេញព្រោះហួសសុពលភាព (EOL) ហើយប្រើតែជំនាន់ថ្មីៗ
+        node-version: [20.x, 22.x]
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm' # បន្ថែម៖ រក្សាទុក Cache ដើម្បីឱ្យដំឡើង Package លើកក្រោយលឿនជាងមុន
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Install dependencies
-      run: npm ci # កែសម្រួល៖ ប្រើ npm ci ជំនួស npm install ដើម្បីឱ្យលឿន និងច្បាស់លាស់ជាង
+      - name: Install dependencies
+        run: npm install
 
-    - name: Build
-      run: npx webpack --mode production # បន្ថែម៖ កំណត់ mode production ដើម្បីកុំឱ្យលោត Warning ពេល Build
+      - name: Build with Webpack
+        run: npx webpack --mode production
+
+      - name: Configure GitHub Pages
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact (dist)
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist' # កែទៅ './build' ឬ './public' បើ Webpack output ទៅ folder ផ្សេង
+
+      # ជម្រើសបន្ថែម៖ រក្សាទុក file dist ជា build artifact ក្នុង workflow run
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: webpack-dist-node-${{ matrix.node-version }}
+          path: dist/
+
+  deploy:
+    # Deploy តែពេល push លើ main ហើយ build ជោគជ័យប៉ុណ្ណោះ
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
