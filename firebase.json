@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "operations-system-mgt",
     "public": ".",
     "ignore": [
       "firebase.json",
